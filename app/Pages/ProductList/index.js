@@ -7,15 +7,10 @@
  */
 
 import React from "react";
-import {
-  FlatList,
-  View,
-  Text,
-  StyleSheet,
-  ScrollView
-} from "react-native";
+import { FlatList, View, Text, StyleSheet, ScrollView } from "react-native";
 
 import ProductListItem from "app/product-list-item";
+import NoDataComponent from "app/no-data-component";
 import { Config } from "apptools";
 
 //因为使用了navigationOptions,
@@ -72,15 +67,20 @@ export default class ProductList extends React.PureComponent {
               根据每条折扣的点击进行统计,每5分钟更新一次
             </Text>
           </View>
-          <FlatList
-            data={this.state.ProductData}
-            keyExtractor={product => product.id}
-            renderItem={product => <ProductListItem {...product.item} />}
-          />
+          {!this.state.ProductData.length ? (
+            <NoDataComponent />
+          ) : (
+            <FlatList
+              data={this.state.ProductData}
+              keyExtractor={product => product.id}
+              renderItem={product => <ProductListItem {...product.item} />}
+            />
+          )}
         </View>
       </ScrollView>
     );
   }
+  //初始化数据
   _initialData() {
     const url = "http://guangdiu.com/api/gethots.php";
     fetch(url)
