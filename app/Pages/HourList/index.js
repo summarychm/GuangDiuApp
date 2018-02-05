@@ -29,13 +29,14 @@ const styles = StyleSheet.create({
 });
 
 export default class HourList extends React.PureComponent {
+
   static navigationOptions = ({ navigation }) => ({
     title: (
       <Text>
         小时<Text style={styles.HeaderTitleText}>风云榜</Text>
       </Text>
     ),
-    headerLeft :<View></View>,
+    headerLeft :<View></View>,    
     headerStyle: styles.HeaderTitle,
     headerRight: (
       <Text

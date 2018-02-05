@@ -59,6 +59,7 @@ export const Router = TabNavigator(
       screen: HourListStack,
       navigationOptions: {
         title: "小时风云榜",
+        visible:'none',
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
             size={26}
@@ -72,8 +73,10 @@ export const Router = TabNavigator(
   {
     initialRouteName: "HomeTab",
     tabBarPosition: "bottom",
+    tabBarVisible:false,
     tabBarOptions: {
       showIcon: true,
+      tabBarVisible:false,
       //showLabel: false,
       activeTintColor: Config.Styles.ColorMain, // 项目基色
       inactiveTintColor: Config.Styles.ColorMinor, //次要色

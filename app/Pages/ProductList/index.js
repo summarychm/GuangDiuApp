@@ -1,5 +1,6 @@
 "use strict";
 /*
+ * 
  * @Author: Max.Liu 
  * @Date: 2018-02-05 17:23:50 
  * @Last Modified time: 2018-02-05 17:23:50 
@@ -11,7 +12,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   ScrollView
 } from "react-native";
 
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     marginRight: 15
   },
   subTitle: {
-    fontSize: 18,
     paddingTop: 10,
     paddingBottom: 10
   }
@@ -41,17 +40,18 @@ import ProductListItem from "app/product-list-item";
 
 export default class ProductList extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
+    tabBarVisible: false,
     title: "半小时内最热商品",
     headerLeft: <View />,
     headerRight: (
-      <TouchableOpacity
+      <Text
+        style={styles.TextRight}
         onPress={() => {
-          console.log(navigation);
           navigation.goBack();
         }}
       >
-        <Text style={styles.TextRight}>关闭</Text>
-      </TouchableOpacity>
+        关闭
+      </Text>
     )
   });
   constructor(props) {

@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: Config.Styles.DevicesWidth,
-    height: 100,
+    height: 120,
     padding: 10,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   ViewImage: {
-    width: 70,
-    height: 70
+    width: 100,
+    height: 100
   },
   ViewText: {
     marginLeft: 5,
