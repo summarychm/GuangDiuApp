@@ -7,7 +7,7 @@
  */
 
 import React from "react";
-import { FlatList, View, Text, StyleSheet, ScrollView } from "react-native";
+import { FlatList, View, Text, StyleSheet } from "react-native";
 
 import ProductListItem from "app/product-list-item";
 import NoDataComponent from "app/no-data-component";
@@ -26,9 +26,15 @@ const styles = StyleSheet.create({
     color: Config.Styles.ColorMain,
     marginRight: 15
   },
+  flexCenter: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
   subTitle: {
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
+    fontSize: 16,
+    color: Config.Styles.ColorMain
   }
 });
 
@@ -60,24 +66,24 @@ export default class ProductList extends React.PureComponent {
   }
   render() {
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <View>
-            <Text style={styles.subTitle}>
-              根据每条折扣的点击进行统计,每5分钟更新一次
-            </Text>
-          </View>
-          {!this.state.ProductData.length ? (
-            <NoDataComponent />
-          ) : (
-            <FlatList
-              data={this.state.ProductData}
-              keyExtractor={product => product.id}
-              renderItem={product => <ProductListItem {...product.item} />}
-            />
-          )}
-        </View>
-      </ScrollView>
+      <View style={styles.container}>
+        {!this.state.ProductData.length ? (
+          <NoDataComponent />
+        ) : (
+          <FlatList
+            ListHeaderComponent={
+              <View style={styles.flexCenter}>
+                <Text style={styles.subTitle}>
+                  根据每条折扣的点击进行统计,每5分钟更新一次
+                </Text>
+              </View>
+            }
+            data={this.state.ProductData}
+            keyExtractor={product => product.id}
+            renderItem={product => <ProductListItem {...product.item} />}
+          />
+        )}
+      </View>
     );
   }
   //初始化数据
