@@ -9,6 +9,7 @@ import { StyleSheet, TouchableOpacity, Text, View, Image } from "react-native";
 
 import NavigationHeader from "app/navigation-header";
 
+// APP首页header封装组件
 export default class HeaderComponent extends React.PureComponent {
   render() {
     return (

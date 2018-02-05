@@ -16,7 +16,8 @@ import {
 } from "react-native";
 
 import HeaderComponent from "./HeaderComponent";
-let _this = null;
+
+// APP首页
 export default class Home extends React.PureComponent {
   static navigationOptions = {
     headerTitle: "Homes",
@@ -26,10 +27,8 @@ export default class Home extends React.PureComponent {
   };
   constructor(props) {
     super(props);
-    _this = this;
   }
   componentDidMount() {
-    _this = this;
   }
   render() {
     return (

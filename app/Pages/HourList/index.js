@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
   }
 });
 
+// 小时风云榜
 export default class HourList extends React.PureComponent {
-
   static navigationOptions = ({ navigation }) => ({
     title: (
       <Text>
@@ -42,7 +42,6 @@ export default class HourList extends React.PureComponent {
       <Text
         style={styles.TextRight}
         onPress={() => {
-          console.log(navigation);
           navigation.goBack();
         }}
       >

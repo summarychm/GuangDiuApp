@@ -9,7 +9,8 @@ import { View, StyleSheet, Platform } from "react-native";
 import PropTypes from "prop-types";
 
 import { Config } from "apptools";
-class NavigationHeader extends Component {
+// 自定义Navigation公共Header组件
+export default class NavigationHeader extends Component {
   static propTypes = {
     renderLeft: PropTypes.func,
     renderTitle: PropTypes.func,
@@ -40,5 +41,3 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-
-export default NavigationHeader;

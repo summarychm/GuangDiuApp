@@ -15,10 +15,11 @@ import {
   ScrollView
 } from "react-native";
 
-//import NavigationHeader from "app/navigation-header";
+import ProductListItem from "app/product-list-item";
 import { Config } from "apptools";
 
-//因为使用了navigationOptions,styles放到最后options无法识别,所以提前了.
+//因为使用了navigationOptions,
+// styles放到最后options无法识别,所以将其提前.
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -36,8 +37,7 @@ const styles = StyleSheet.create({
   }
 });
 
-import ProductListItem from "app/product-list-item";
-
+// 半小时内最热商品页
 export default class ProductList extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
     tabBarVisible: false,
@@ -88,7 +88,7 @@ export default class ProductList extends React.PureComponent {
       .catch(err => console.error("获取半小时内最热商品出错.", err))
       .then(result => {
         if (result.status !== "ok") {
-          console.log("获取半小时内最热商品异常", result);
+          console.error("获取半小时内最热商品异常", result);
           return;
         }
         this.setState({ ProductData: result.data });

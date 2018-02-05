@@ -7,6 +7,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
+// 海淘商品页面
 export default class HaiTao extends React.PureComponent {
   render() {
     return (

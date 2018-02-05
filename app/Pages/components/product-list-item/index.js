@@ -15,6 +15,7 @@ import {
 
 import { Config } from "apptools";
 
+// 商品列表公共item项组件
 class ProductListItem extends React.Component {
   render() {
     const { image, title, id } = this.props;
