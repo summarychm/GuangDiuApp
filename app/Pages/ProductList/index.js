@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 export default class ProductList extends React.PureComponent {
   static navigationOptions= ({navigation}) => ({
-    title: "近半小时热门商品",
+    title: "半小时内最热商品",
     headerRight: (
       <TouchableOpacity onPress={()=>{
         console.log(navigation);
