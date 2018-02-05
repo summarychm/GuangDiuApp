@@ -1,5 +1,5 @@
-'use strict'; 
- /*
+"use strict";
+/*
  * @Author: Max.Liu 
  * @Date: 2018-02-05 20:06:32 
  * @Last Modified time: 2018-02-05 20:06:32 
@@ -14,15 +14,24 @@ import {
 } from "react-native";
 
 import { Config } from "apptools";
+import PropType from "prop-types";
 
 // 商品列表公共item项组件
-class ProductListItem extends React.Component {
+export default class ProductListItem extends React.Component {
+  static propTypes = {
+    image: PropType.string,
+    title: PropType.string,
+    id: PropType.number
+  };
   render() {
     const { image, title, id } = this.props;
     return (
       <TouchableHighlight>
         <View style={styles.container}>
-          <Image style={styles.ViewImage} source={{ uri: image }} />
+          <Image
+            style={styles.ViewImage}
+            source={{ uri: image === "" ? "defaullt_thumb_250x250" : image }}
+          />
           <Text style={styles.ViewText} numberOfLines={3}>
             {title}
           </Text>
@@ -57,5 +66,3 @@ const styles = StyleSheet.create({
     height: 10
   }
 });
-
-export default ProductListItem;
