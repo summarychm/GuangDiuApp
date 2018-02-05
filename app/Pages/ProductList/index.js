@@ -7,7 +7,7 @@
  */
 
 import React from "react";
-import { FlatList, View, Text, StyleSheet } from "react-native";
+import { FlatList, View, Text, StyleSheet, RefreshControl } from "react-native";
 
 import ProductListItem from "app/product-list-item";
 import NoDataComponent from "app/no-data-component";
@@ -58,11 +58,12 @@ export default class ProductList extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      isRefreshing: false, //是否刷新中
       ProductData: {}
     };
   }
   componentDidMount() {
-    this._initialData();
+    this._fetchData();
   }
   render() {
     return (
@@ -78,6 +79,16 @@ export default class ProductList extends React.PureComponent {
                 </Text>
               </View>
             }
+            refreshing={this.state.isRefreshing}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this._fetchData}
+                title="拼命加载中..."
+                colors={[Config.Styles.ColorMain]}
+                progressBackgroundColor={"#fec200"} //背景色
+              />
+            }
             data={this.state.ProductData}
             keyExtractor={product => product.id}
             renderItem={product => <ProductListItem {...product.item} />}
@@ -87,9 +98,13 @@ export default class ProductList extends React.PureComponent {
     );
   }
   //初始化数据
-  _initialData() {
+  _fetchData = async () => {
+    await this.setState({
+      isRefreshing: true,
+      ProductData: {}
+    });
     const url = "http://guangdiu.com/api/gethots.php";
-    fetch(url)
+    await fetch(url)
       .then(response => response.json())
       .catch(err => console.error("获取半小时内最热商品出错.", err))
       .then(result => {
@@ -97,8 +112,11 @@ export default class ProductList extends React.PureComponent {
           console.error("获取半小时内最热商品异常", result);
           return;
         }
-        this.setState({ ProductData: result.data });
+        this.setState({
+          ProductData: result.data,
+          isRefreshing: false
+        });
       })
       .done();
-  }
+  };
 }
