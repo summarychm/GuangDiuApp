@@ -4,16 +4,25 @@ import { Image } from "react-native";
 import { StackNavigator, TabNavigator } from "react-navigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import { Config } from "apptools";
 import Home from "../Pages/Home/index";
 import HaiTao from "../Pages/HaiTao/index";
 import HourList from "../Pages/HourList/index";
 
+const HomeStack = StackNavigator({ Home: { screen: Home, path: "/home" } });
+const HaiTaoStack = StackNavigator({
+  HaiTao: { screen: HaiTao, path: "/home" }
+});
+const HourListStack = StackNavigator({
+  HourList: { screen: HourList, path: "/home" }
+});
+
 export const Router = TabNavigator(
   {
     HomeTab: {
-      screen: Home,
-      path: "/home",
+      screen: HomeStack,
       navigationOptions: {
+        title:'首页',
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
             size={26}
@@ -24,9 +33,9 @@ export const Router = TabNavigator(
       }
     },
     HaiTaoTab: {
-      screen: HaiTao,
-      path: "/haitao",
+      screen: HaiTaoStack,
       navigationOptions: {
+        title:'海淘',
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
             size={26}
@@ -37,9 +46,9 @@ export const Router = TabNavigator(
       }
     },
     HourListTab: {
-      screen: HourList,
-      path: "/hour",
+      screen: HourListStack,
       navigationOptions: {
+        title:'小时风云榜',
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
             size={26}
@@ -55,9 +64,9 @@ export const Router = TabNavigator(
     tabBarPosition: "bottom",
     tabBarOptions: {
       showIcon: true,
-      showLabel: false,
-      activeTintColor: "#c237e2", // 项目基色
-      inactiveTintColor: "#0c32e3",
+      //showLabel: false,
+      activeTintColor: Config.Styles.ColorMain, // 项目基色
+      inactiveTintColor: Config.Styles.ColorMinor, //次要色
       style: {
         backgroundColor: "#eee"
       }
