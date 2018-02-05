@@ -6,7 +6,14 @@
  */
 
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView
+} from "react-native";
 
 //import NavigationHeader from "app/navigation-header";
 import { Config } from "apptools";
@@ -21,24 +28,71 @@ const styles = StyleSheet.create({
   },
   TextRight: {
     color: Config.Styles.ColorMain,
-    marginRight:15,
+    marginRight: 15
+  },
+  subTitle: {
+    fontSize: 18,
+    paddingTop: 10,
+    paddingBottom: 10
   }
 });
 
+import ProductListItem from "app/product-list-item";
+
 export default class ProductList extends React.PureComponent {
-  static navigationOptions= ({navigation}) => ({
+  static navigationOptions = ({ navigation }) => ({
     title: "半小时内最热商品",
+    headerLeft: <View />,
     headerRight: (
-      <TouchableOpacity onPress={()=>{
-        console.log(navigation);
-        navigation.goBack();
-      }} >
+      <TouchableOpacity
+        onPress={() => {
+          console.log(navigation);
+          navigation.goBack();
+        }}
+      >
         <Text style={styles.TextRight}>关闭</Text>
       </TouchableOpacity>
     )
   });
+  constructor(props) {
+    super(props);
+    this.state = {
+      ProductData: {}
+    };
+  }
+  componentDidMount() {
+    this._initialData();
+  }
   render() {
-    return <View style={styles.container}>{this._renderHeader}</View>;
+    return (
+      <ScrollView>
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.subTitle}>
+              根据每条折扣的点击进行统计,每5分钟更新一次
+            </Text>
+          </View>
+          <FlatList
+            data={this.state.ProductData}
+            keyExtractor={product => product.id}
+            renderItem={product => <ProductListItem {...product.item} />}
+          />
+        </View>
+      </ScrollView>
+    );
+  }
+  _initialData() {
+    const url = "http://guangdiu.com/api/gethots.php";
+    fetch(url)
+      .then(response => response.json())
+      .catch(err => console.error("获取半小时内最热商品出错.", err))
+      .then(result => {
+        if (result.status !== "ok") {
+          console.log("获取半小时内最热商品异常", result);
+          return;
+        }
+        this.setState({ ProductData: result.data });
+      })
+      .done();
   }
 }
-

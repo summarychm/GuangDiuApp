@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#eee"
   },
   HeaderTitle: {
-    paddingLeft:50
+    paddingLeft: 50
   },
   HeaderTitleText: {
     color: Config.Styles.ColorMain
@@ -35,16 +35,18 @@ export default class HourList extends React.PureComponent {
         小时<Text style={styles.HeaderTitleText}>风云榜</Text>
       </Text>
     ),
-    headerStyle  : styles.HeaderTitle,
+    headerLeft :<View></View>,
+    headerStyle: styles.HeaderTitle,
     headerRight: (
-      <TouchableOpacity
+      <Text
+        style={styles.TextRight}
         onPress={() => {
           console.log(navigation);
           navigation.goBack();
         }}
       >
-        <Text style={styles.TextRight}>关闭</Text>
-      </TouchableOpacity>
+        关闭
+      </Text>
     )
   });
   render() {
