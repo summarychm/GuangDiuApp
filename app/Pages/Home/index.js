@@ -6,21 +6,35 @@
  */
 
 import React from "react";
-import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  Button,
+  Image,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet
+} from "react-native";
 
-import HeaderComponent from './HeaderComponent';
-
+import HeaderComponent from "./HeaderComponent";
+let _this = null;
 export default class Home extends React.PureComponent {
   static navigationOptions = {
     headerTitle: "Homes",
-    header: <HeaderComponent />
+    header: ({ navigation }) => {
+      return <HeaderComponent navigation={navigation} />;
+    }
   };
-
+  constructor(props) {
+    super(props);
+    _this = this;
+  }
+  componentDidMount() {
+    _this = this;
+  }
   render() {
     return (
       <View style={styles.container}>
         <Text>Home</Text>
-        <Text>Footer2018-2-5</Text>
       </View>
     );
   }
@@ -32,6 +46,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#333"
+    backgroundColor: "#355"
   }
 });

@@ -1,3 +1,9 @@
+'use strict'; 
+ /*
+ * @Author: Max.Liu 
+ * @Date: 2018-02-05 16:41:41 
+ * @Last Modified time: 2018-02-05 16:41:41 
+ */
 import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 export class Config {

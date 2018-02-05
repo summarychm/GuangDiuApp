@@ -1,3 +1,9 @@
+"use strict";
+/*
+ * @Author: Max.Liu 
+ * @Date: 2018-02-04
+ * @Last Modified time: 2018-02-05 16:41:19 
+ */
 import React from "react";
 
 import { Image } from "react-native";
@@ -8,8 +14,12 @@ import { Config } from "apptools";
 import Home from "../Pages/Home/index";
 import HaiTao from "../Pages/HaiTao/index";
 import HourList from "../Pages/HourList/index";
+import ProductList from "../Pages/ProductList/index";
 
-const HomeStack = StackNavigator({ Home: { screen: Home, path: "/home" } });
+const HomeStack = StackNavigator({
+  Home: { screen: Home, path: "/home" },
+  ProductList: { screen: ProductList, path: "/productList" }
+});
 const HaiTaoStack = StackNavigator({
   HaiTao: { screen: HaiTao, path: "/home" }
 });
@@ -22,7 +32,7 @@ export const Router = TabNavigator(
     HomeTab: {
       screen: HomeStack,
       navigationOptions: {
-        title:'首页',
+        title: "首页",
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
             size={26}
@@ -35,7 +45,7 @@ export const Router = TabNavigator(
     HaiTaoTab: {
       screen: HaiTaoStack,
       navigationOptions: {
-        title:'海淘',
+        title: "海淘",
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
             size={26}
@@ -48,7 +58,7 @@ export const Router = TabNavigator(
     HourListTab: {
       screen: HourListStack,
       navigationOptions: {
-        title:'小时风云榜',
+        title: "小时风云榜",
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
             size={26}

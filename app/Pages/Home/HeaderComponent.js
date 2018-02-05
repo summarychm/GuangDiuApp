@@ -17,7 +17,8 @@ export default class HeaderComponent extends React.PureComponent {
           <TouchableOpacity
             style={styles.ViewLeft}
             onPress={() => {
-              console.log("TouchableRight");
+              const { navigation } = this.props;
+              navigation && navigation.navigate("ProductList");
             }}
           >
             <Image source={{ uri: "hot_icon_20x20" }} style={styles.image} />
