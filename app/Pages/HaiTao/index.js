@@ -95,7 +95,6 @@ export default class Home extends React.PureComponent {
     let { config } = this.state;
     let options = this.state.config;
     if (options.sinceid === 0) delete options.sinceid;
-    console.log(options);
 
     let header = { Accept: "application/json" };
     Request.POST(url, options, header).then(result => {
@@ -106,11 +105,9 @@ export default class Home extends React.PureComponent {
         //上滑加载
         ProductData = this.state.ProductData;
         ProductData = ProductData.concat(result.data);
-        console.log("上滑加载");
       } else {
         //下拉刷新
         ProductData = result.data;
-        console.log("下拉刷新");
       }
 
       let config = this.state.config;

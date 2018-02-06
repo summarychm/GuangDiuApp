@@ -16,7 +16,7 @@ import HourList from "../Pages/HourList/index";
 import ProductList from "../Pages/ProductList/index";
 import ProductDetail from "../Pages/components/product-detail";
 //启动页
-import LaunchPage from '../Pages/components/launch-page';
+import LaunchPage from "../Pages/components/launch-page";
 
 const HomeStack = StackNavigator({
   Home: { screen: Home, path: "/home" },
@@ -77,6 +77,7 @@ const TabBarNavigation = TabNavigator(
     initialRouteName: "HomeTab",
     tabBarPosition: "bottom",
     tabBarVisible: false,
+    lazyLoad: true,
     tabBarOptions: {
       showIcon: true,
       tabBarVisible: false,
@@ -89,9 +90,12 @@ const TabBarNavigation = TabNavigator(
     }
   }
 );
-export const Router=StackNavigator({
-  LaunchPage:{screen:LaunchPage,path:"/launchPage"},
-  TabBarPage:{screen:TabBarNavigation,path:"/main"},
-},{
-  headerMode : "none",
-})
+export const Router = StackNavigator(
+  {
+    LaunchPage: { screen: LaunchPage, path: "/launchPage" },
+    TabBarPage: { screen: TabBarNavigation, path: "/main" }
+  },
+  {
+    headerMode: "none"
+  }
+);
