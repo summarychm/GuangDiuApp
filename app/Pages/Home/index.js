@@ -13,7 +13,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  FlatList
+  FlatList,
 } from "react-native";
 
 import HeaderComponent from "./HeaderComponent";
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#eee"
+    backgroundColor: "#eee",
+    paddingTop: 20
   }
 });

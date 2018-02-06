@@ -30,7 +30,7 @@ export default class ProductListItem extends React.Component {
     return (
       <TouchableHighlight
         onPress={() => {
-          navigation && navigation.navigate("ProductDetail",{id:id});
+          navigation && navigation.navigate("ProductDetail",{id:id,title:title});
         }}
       >
         <View style={styles.container}>

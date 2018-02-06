@@ -2,21 +2,22 @@ import React, { Component } from "react";
 import { View, StyleSheet, Text, WebView } from "react-native";
 import propTypes from "prop-types";
 
+import { Config } from "apptools";
+
 class ProductDetail extends Component {
   static propTypes = {
     navigation: propTypes.object
   };
-  static navigationOptions = {
-    headerTitle: "详情页"
-  };
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: "优惠详情页",
+    tabBarVisible: false
+  });
   render() {
-      console.log('====================================');
-      console.log(this.props.navigation.state.params);
-      console.log('====================================');
-      const id=this.props.navigation.state.params.id;
+    let { id, title } = this.props.navigation.state.params;
     let url = `https://guangdiu.com/api/showdetail.php?v=21&id=${id}`;
+
     return (
-      <View>
+      <View style={styles.container}>
         <WebView
           style={styles.webView}
           source={{ uri: url, method: "GET" }}
@@ -36,6 +37,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   webView: {
-    flex: 1
+    flex: 1,
+    width: Config.Styles.DevicesWidth,
+    height: Config.Styles.DevicesHeight
   }
 });
