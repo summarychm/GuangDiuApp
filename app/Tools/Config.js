@@ -16,7 +16,7 @@ export class Config {
   };
   static Headers = {
     Accept: "application/json",
-    "Content-Type": "application/json;charset=UTF-8;"
+    "Content-Type": "application/json;charset=UTF-8"
   };
   static URL = {
     Hot30Minute: `${BASE_URL}gethots.php`, // 30分钟内最热商品

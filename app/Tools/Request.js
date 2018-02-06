@@ -56,10 +56,6 @@ Request.POST = (url, params, headers) => {
   return FetchFn(url, options);
 };
 
-const InitData = (url, params) => {
-  if (url && url.length <= 5) throw new Error("请传递正确的URL地址");
-};
-
 //公共的Fetch方法
 const FetchFn = (url, options) => {
   return fetch(url, options)

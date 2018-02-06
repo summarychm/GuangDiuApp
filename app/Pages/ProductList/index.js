@@ -66,29 +66,29 @@ export default class ProductList extends React.PureComponent {
     this._fetchData();
   }
   render() {
-    return (
-      <View style={styles.container}>
-        {!this.state.ProductData.length ? (
-          <NoDataComponent />
-        ) : (
-          <FlatList
-            ListHeaderComponent={
-              <View style={styles.flexCenter}>
-                <Text style={styles.subTitle}>
-                  根据每条折扣的点击进行统计,每5分钟更新一次
-                </Text>
-              </View>
-            }
-            refreshing={this.state.isRefreshing}
-            onRefresh={this._fetchData}
-            data={this.state.ProductData}
-            keyExtractor={product => product.id}
-            renderItem={product => <ProductListItem {...product.item} />}
-          />
-        )}
-      </View>
-    );
+    return <View style={styles.container}>{this._renderList()}</View>;
   }
+  
+  _renderList = () => {
+    return !this.state.ProductData.length ? (
+      <NoDataComponent />
+    ) : (
+      <FlatList
+        ListHeaderComponent={
+          <View style={styles.flexCenter}>
+            <Text style={styles.subTitle}>
+              根据每条折扣的点击进行统计,每5分钟更新一次
+            </Text>
+          </View>
+        }
+        refreshing={this.state.isRefreshing}
+        onRefresh={this._fetchData}
+        data={this.state.ProductData}
+        keyExtractor={product => product.id}
+        renderItem={product => <ProductListItem {...product.item} />}
+      />
+    );
+  };
   _fetchData = async () => {
     await this.setState({
       isRefreshing: true,

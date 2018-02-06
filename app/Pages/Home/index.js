@@ -12,10 +12,14 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  FlatList
 } from "react-native";
 
 import HeaderComponent from "./HeaderComponent";
+import ProductListItem from "app/product-list-item";
+import NoDataComponent from "app/no-data-component";
+
 import { Config, Request } from "apptools";
 
 // APP首页
@@ -29,30 +33,52 @@ export default class Home extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      ProductList: {}
+      isRefreshing: false,
+      sinceid: 0,
+      ProductData: []
     };
   }
   componentDidMount() {
     this._fetchData();
   }
-  _fetchData = async () => {
-    let options = { count: 10, mall: "京东商城" };
-    let url = "http://guangdiu.com/api/getlist.php";
-    let result = await Request.POST(url, options, {
-      Accept: "application/json"
-    });
-    await this.setState({
-      ProductList: result.data
-    });
-  };
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Home</Text>
-      </View>
-    );
+    return <View style={styles.container}>{this._renderList()}</View>;
   }
+  _renderList = () => {
+    return !this.state.ProductData.length ? (
+      <NoDataComponent />
+    ) : (
+      <FlatList
+        data={this.state.ProductData}
+        //距离底部20dp触发就触发onEndReached回调
+        onEndReachedThreshold={0.5}
+        //触底刷新事件
+        onEndReached={this._fetchData}
+        keyExtractor={product => product.id}
+        renderItem={product => <ProductListItem {...product.item} />}
+      />
+    );
+  };
+  _fetchData = () => {
+    //, country: "", sinceid: ""
+    let url = "http://guangdiu.com/api/getlist.php";
+    let options = { count: 10, mall: "京东商城" };
+    if (this.state.sinceid !== 0) options.sinceid = this.state.sinceid;
+    let header = { Accept: "application/json" };
+    Request.POST(url, options, header).then(result => {
+      console.log(result);
+      if (result.status !== "ok")
+        throw new Error("获取首页商品列表异常.", result);
+      let ProductData = this.state.ProductData;
+      ProductData = ProductData.concat(result.data);
+      this.setState({
+        ProductData: ProductData,
+        sinceid: ProductData[ProductData.length - 1].id,
+        isRefreshing: false
+      });
+    });
+  };
 }
 
 const styles = StyleSheet.create({
@@ -61,6 +87,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#355"
+    backgroundColor: "#eee"
   }
 });
