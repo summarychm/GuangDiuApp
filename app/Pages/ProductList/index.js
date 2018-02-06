@@ -40,21 +40,24 @@ const styles = StyleSheet.create({
 
 // 半小时内最热商品页
 export default class ProductList extends React.PureComponent {
-  static navigationOptions = ({ navigation }) => ({
-    tabBarVisible: false,
-    title: "半小时内最热商品",
-    headerLeft: <View />,
-    headerRight: (
-      <Text
-        style={styles.TextRight}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
-        关闭
-      </Text>
-    )
-  });
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    return {
+      tabBarVisible: false,
+      title: params.countryTitle+"最热商品(30分钟内)",
+      headerLeft: <View />,
+      headerRight: (
+        <Text
+          style={styles.TextRight}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          关闭
+        </Text>
+      )
+    }
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +88,7 @@ export default class ProductList extends React.PureComponent {
         onRefresh={this._fetchData}
         data={this.state.ProductData}
         keyExtractor={product => product.id}
-        renderItem={product => <ProductListItem {...product.item} />}
+        renderItem={product => <ProductListItem {...product.item} navigation={this.props.navigation} />}
       />
     );
   };

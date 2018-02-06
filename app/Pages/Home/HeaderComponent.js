@@ -11,6 +11,10 @@ import NavigationHeader from "app/navigation-header";
 
 // APP首页header封装组件
 export default class HeaderComponent extends React.PureComponent {
+  static defaultProps = {
+    country: "ch",
+    countryTitle: "国内"
+  };
   render() {
     return (
       <NavigationHeader
@@ -18,8 +22,12 @@ export default class HeaderComponent extends React.PureComponent {
           <TouchableOpacity
             style={styles.ViewLeft}
             onPress={() => {
-              const { navigation } = this.props;
-              navigation && navigation.navigate("ProductList");
+              const { navigation, country, countryTitle } = this.props;
+              navigation &&
+                navigation.navigate("ProductList", {
+                  country: country,
+                  countryTitle: countryTitle
+                });
             }}
           >
             <Image source={{ uri: "hot_icon_20x20" }} style={styles.image} />

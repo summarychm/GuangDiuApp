@@ -13,7 +13,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  FlatList,
+  FlatList
 } from "react-native";
 
 import HeaderComponent from "./HeaderComponent";
@@ -23,25 +23,35 @@ import NoDataComponent from "app/no-data-component";
 import { Config, Request } from "apptools";
 
 // APP首页
-
 export default class Home extends React.PureComponent {
   static navigationOptions = {
     header: ({ navigation }) => {
-      return <HeaderComponent navigation={navigation} />;
+      return (
+        <HeaderComponent
+          navigation={navigation}
+          country="ch"
+          countryTitle="国内"
+        />
+      );
     }
   };
   constructor(props) {
     super(props);
     this.state = {
       isRefreshing: false,
-      sinceid: 0,
+      config: {
+        sinceid: 0, //上次最后一个结果id
+        count: 10, //数量
+        country: "ch", //国内ch,海淘us
+        mall: "", // 电商平台
+        cate: "" //分类
+      },
       ProductData: []
     };
   }
   componentDidMount() {
     this._fetchData();
   }
-
   render() {
     return <View style={styles.container}>{this._renderList()}</View>;
   }
@@ -51,6 +61,20 @@ export default class Home extends React.PureComponent {
     ) : (
       <FlatList
         data={this.state.ProductData}
+        refreshing={this.state.isRefreshing}
+        onRefresh={() => {
+          let config = this.state.config;
+          config.sinceid = 0;
+          // 设置为刷新状态,清空ProductData和重置sinceid
+          this.setState({
+              isRefreshing: true,
+              config: config,
+              ProductData:[]
+            },() => {
+              this._fetchData();
+            }
+          );
+        }}
         //距离底部20dp触发就触发onEndReached回调
         onEndReachedThreshold={0.5}
         //触底刷新事件
@@ -66,20 +90,33 @@ export default class Home extends React.PureComponent {
     );
   };
   _fetchData = () => {
-    //, country: "", sinceid: ""
     let url = Config.URL.ProductList;
-    let options = { count: 10, mall: "京东商城" };
-    if (this.state.sinceid !== 0) options.sinceid = this.state.sinceid;
+    let { config } = this.state;
+    let options = this.state.config;
+    if (options.sinceid === 0) delete options.sinceid;
+    console.log(options);
+
     let header = { Accept: "application/json" };
     Request.POST(url, options, header).then(result => {
       if (result.status !== "ok")
         throw new Error("获取首页商品列表异常.", result);
-      let ProductData = this.state.ProductData;
-      ProductData = ProductData.concat(result.data);
-      //console.log(ProductData);
+      let ProductData = [];
+      if (!this.state.isRefreshing) {
+        //上滑加载
+        ProductData = this.state.ProductData;
+        ProductData = ProductData.concat(result.data);
+        console.log("上滑加载");
+      } else {
+        //下拉刷新
+        ProductData = result.data;
+        console.log("下拉刷新");
+      }
+
+      let config = this.state.config;
+      config.sinceid = ProductData[ProductData.length - 1].id;
       this.setState({
         ProductData: ProductData,
-        sinceid: ProductData[ProductData.length - 1].id,
+        config: config,
         isRefreshing: false
       });
     });

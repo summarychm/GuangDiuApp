@@ -21,9 +21,8 @@ class LaunchPage extends Component {
   componentDidMount() {
 
     setTimeout(()=> {
-      console.log("ready");
       this.props.navigation.navigate("Home")
-    }, 1000);
+    }, 1000*0.1);
   }
   render() {
     return (
