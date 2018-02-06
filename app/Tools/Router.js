@@ -14,10 +14,12 @@ import Home from "../Pages/Home/index";
 import HaiTao from "../Pages/HaiTao/index";
 import HourList from "../Pages/HourList/index";
 import ProductList from "../Pages/ProductList/index";
+import ProductDetail from "../Pages/components/product-detail";
 
 const HomeStack = StackNavigator({
   Home: { screen: Home, path: "/home" },
-  ProductList: { screen: ProductList, path: "/productList" }
+  ProductList: { screen: ProductList, path: "/productList" },
+  ProductDetail: { screen: ProductDetail, path: "/productDetail" }
 });
 const HaiTaoStack = StackNavigator({
   HaiTao: { screen: HaiTao, path: "/home" }
@@ -58,7 +60,7 @@ export const Router = TabNavigator(
       screen: HourListStack,
       navigationOptions: {
         title: "小时风云榜",
-        visible:'none',
+        visible: "none",
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
             size={26}
@@ -72,10 +74,10 @@ export const Router = TabNavigator(
   {
     initialRouteName: "HomeTab",
     tabBarPosition: "bottom",
-    tabBarVisible:false,
+    tabBarVisible: false,
     tabBarOptions: {
       showIcon: true,
-      tabBarVisible:false,
+      tabBarVisible: false,
       //showLabel: false,
       activeTintColor: Config.Styles.ColorMain, // 项目基色
       inactiveTintColor: Config.Styles.ColorMinor, //次要色

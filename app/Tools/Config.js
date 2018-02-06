@@ -6,10 +6,11 @@
  */
 import { Dimensions, StyleSheet } from "react-native";
 const { width, height } = Dimensions.get("window");
-const BASE_URL = "http://guangdiu.com/api/";
+const BASE_URL = "https://guangdiu.com/api/";
 export class Config {
   static Styles = {
     DevicesWidth: width,
+    DevicesHeight: height,
     ColorMain: "#6ebe64",
     ColorMinor: "#bbbabb",
     hairlineWidth: StyleSheet.hairlineWidth

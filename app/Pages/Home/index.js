@@ -23,6 +23,7 @@ import NoDataComponent from "app/no-data-component";
 import { Config, Request } from "apptools";
 
 // APP首页
+
 export default class Home extends React.PureComponent {
   static navigationOptions = {
     headerTitle: "Homes",
@@ -56,22 +57,27 @@ export default class Home extends React.PureComponent {
         //触底刷新事件
         onEndReached={this._fetchData}
         keyExtractor={product => product.id}
-        renderItem={product => <ProductListItem {...product.item} />}
+        renderItem={product => (
+          <ProductListItem
+            {...product.item}
+            navigation={this.props.navigation}
+          />
+        )}
       />
     );
   };
   _fetchData = () => {
     //, country: "", sinceid: ""
-    let url = "http://guangdiu.com/api/getlist.php";
+    let url = Config.URL.ProductList;
     let options = { count: 10, mall: "京东商城" };
     if (this.state.sinceid !== 0) options.sinceid = this.state.sinceid;
     let header = { Accept: "application/json" };
     Request.POST(url, options, header).then(result => {
-      console.log(result);
       if (result.status !== "ok")
         throw new Error("获取首页商品列表异常.", result);
       let ProductData = this.state.ProductData;
       ProductData = ProductData.concat(result.data);
+      //console.log(ProductData);
       this.setState({
         ProductData: ProductData,
         sinceid: ProductData[ProductData.length - 1].id,

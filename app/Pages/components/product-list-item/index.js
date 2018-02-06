@@ -17,6 +17,8 @@ import PropType from "prop-types";
 
 import { Config } from "apptools";
 
+import ProductDetail from "app/product-detail";
+
 export default class ProductListItem extends React.Component {
   static propTypes = {
     image: PropType.string,
@@ -24,13 +26,19 @@ export default class ProductListItem extends React.Component {
     id: PropType.number
   };
   render() {
-    const { image, title, id } = this.props;
+    const { image, title, id, navigation } = this.props;
     return (
-      <TouchableHighlight>
+      <TouchableHighlight
+        onPress={() => {
+          navigation && navigation.navigate("ProductDetail",{id:id});
+        }}
+      >
         <View style={styles.container}>
           <Image
             style={styles.ViewImage}
-            source={{ uri: image === undefined ? "defaullt_thumb_250x250" : image }}
+            source={{
+              uri: image === undefined ? "defaullt_thumb_250x250" : image
+            }}
           />
           <Text style={styles.ViewText} numberOfLines={3}>
             {title}
