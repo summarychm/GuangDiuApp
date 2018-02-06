@@ -1,10 +1,30 @@
 import React, { Component } from "react";
 import { Image, View, StyleSheet } from "react-native";
-import { Router } from "apptools";
 
 import { Config } from "apptools";
 
 class LaunchPage extends Component {
+  static navigationOptions=({navigation})=>{
+    const { params } = navigation.state;
+    return {
+      header:<View></View>,
+      title:"title",
+      //headerMode:'none',
+    }
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      isReady: false
+    };
+  }
+  componentDidMount() {
+
+    setTimeout(()=> {
+      console.log("ready");
+      this.props.navigation.navigate("Home")
+    }, 1000);
+  }
   render() {
     return (
       <View>
@@ -24,6 +44,7 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     width: Config.Styles.DevicesWidth,
+    //height:300,
     height: Config.Styles.DevicesHeight
   }
 });

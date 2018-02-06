@@ -7,9 +7,7 @@
 import { AppRegistry } from "react-native"; 
 
 import {Router} from "apptools";
-import LaunchPage from 'app/launch-page';
  
 // 屏蔽APPRemote debugger的警告
 console.ignoredYellowBox = ['Remote debugger'];
 AppRegistry.registerComponent("GuangDiuApp", () => Router);
-//AppRegistry.registerComponent("GuangDiuApp", () => LaunchPage);

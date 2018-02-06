@@ -15,6 +15,8 @@ import HaiTao from "../Pages/HaiTao/index";
 import HourList from "../Pages/HourList/index";
 import ProductList from "../Pages/ProductList/index";
 import ProductDetail from "../Pages/components/product-detail";
+//启动页
+import LaunchPage from '../Pages/components/launch-page';
 
 const HomeStack = StackNavigator({
   Home: { screen: Home, path: "/home" },
@@ -28,7 +30,7 @@ const HourListStack = StackNavigator({
   HourList: { screen: HourList, path: "/home" }
 });
 
-export const Router = TabNavigator(
+const TabBarNavigation = TabNavigator(
   {
     HomeTab: {
       screen: HomeStack,
@@ -87,3 +89,9 @@ export const Router = TabNavigator(
     }
   }
 );
+export const Router=StackNavigator({
+  LaunchPage:{screen:LaunchPage,path:"/launchPage"},
+  TabBarPage:{screen:TabBarNavigation,path:"/main"},
+},{
+  headerMode : "none",
+})

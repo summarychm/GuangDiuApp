@@ -26,7 +26,6 @@ import { Config, Request } from "apptools";
 
 export default class Home extends React.PureComponent {
   static navigationOptions = {
-    headerTitle: "Homes",
     header: ({ navigation }) => {
       return <HeaderComponent navigation={navigation} />;
     }
