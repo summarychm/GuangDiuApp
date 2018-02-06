@@ -1,5 +1,6 @@
 "use strict";
 /*
+ * 商品列表公共item项组件
  * @Author: Max.Liu 
  * @Date: 2018-02-05 20:06:32 
  * @Last Modified time: 2018-02-05 20:06:32 
@@ -12,11 +13,10 @@ import {
   Image,
   StyleSheet
 } from "react-native";
-
-import { Config } from "apptools";
 import PropType from "prop-types";
 
-// 商品列表公共item项组件
+import { Config } from "apptools";
+
 export default class ProductListItem extends React.Component {
   static propTypes = {
     image: PropType.string,
@@ -30,7 +30,7 @@ export default class ProductListItem extends React.Component {
         <View style={styles.container}>
           <Image
             style={styles.ViewImage}
-            source={{ uri: image === "" ? "defaullt_thumb_250x250" : image }}
+            source={{ uri: image === undefined ? "defaullt_thumb_250x250" : image }}
           />
           <Text style={styles.ViewText} numberOfLines={3}>
             {title}

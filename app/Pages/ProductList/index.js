@@ -7,14 +7,14 @@
  */
 
 import React from "react";
-import { FlatList, View, Text, StyleSheet, RefreshControl } from "react-native";
+import { FlatList, View, Text, StyleSheet } from "react-native";
 
 import ProductListItem from "app/product-list-item";
 import NoDataComponent from "app/no-data-component";
+
 import { Config } from "apptools";
 
-//因为使用了navigationOptions,
-// styles放到最后options无法识别,所以将其提前.
+// styles放到最后,navigationOptions无法识别,所以将其提前.
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -80,15 +80,7 @@ export default class ProductList extends React.PureComponent {
               </View>
             }
             refreshing={this.state.isRefreshing}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.isRefreshing}
-                onRefresh={this._fetchData}
-                title="拼命加载中..."
-                colors={[Config.Styles.ColorMain]}
-                progressBackgroundColor={"#fec200"} //背景色
-              />
-            }
+            onRefresh={this._fetchData}
             data={this.state.ProductData}
             keyExtractor={product => product.id}
             renderItem={product => <ProductListItem {...product.item} />}
@@ -97,26 +89,22 @@ export default class ProductList extends React.PureComponent {
       </View>
     );
   }
-  //初始化数据
+  //获取最新数据
   _fetchData = async () => {
     await this.setState({
       isRefreshing: true,
       ProductData: {}
     });
     const url = "http://guangdiu.com/api/gethots.php";
-    await fetch(url)
-      .then(response => response.json())
-      .catch(err => console.error("获取半小时内最热商品出错.", err))
-      .then(result => {
-        if (result.status !== "ok") {
-          console.error("获取半小时内最热商品异常", result);
-          return;
-        }
-        this.setState({
-          ProductData: result.data,
-          isRefreshing: false
-        });
-      })
-      .done();
+    let response = await fetch(url).catch(err => {
+      throw new Error("获取半小时内最热商品出错.", err);
+    });
+    const result = await response.json();
+    if (result.status !== "ok")
+      throw new Error("获取30分钟内最热商品异常.", result);
+    await this.setState({
+      ProductData: result.data,
+      isRefreshing: false
+    });
   };
 }
