@@ -16,6 +16,7 @@ import {
 } from "react-native";
 
 import HeaderComponent from "./HeaderComponent";
+import { Config, Request } from "apptools";
 
 // APP首页
 export default class Home extends React.PureComponent {
@@ -27,9 +28,24 @@ export default class Home extends React.PureComponent {
   };
   constructor(props) {
     super(props);
+    this.state = {
+      ProductList: {}
+    };
   }
   componentDidMount() {
+    this._fetchData();
   }
+  _fetchData = async () => {
+    let options = { count: 10, mall: "京东商城" };
+    let url = "http://guangdiu.com/api/getlist.php";
+    let result = await Request.POST(url, options, {
+      Accept: "application/json"
+    });
+    await this.setState({
+      ProductList: result.data
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>

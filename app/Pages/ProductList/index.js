@@ -12,7 +12,7 @@ import { FlatList, View, Text, StyleSheet } from "react-native";
 import ProductListItem from "app/product-list-item";
 import NoDataComponent from "app/no-data-component";
 
-import { Config } from "apptools";
+import { Config, Request } from "apptools";
 
 // styles放到最后,navigationOptions无法识别,所以将其提前.
 const styles = StyleSheet.create({
@@ -89,17 +89,12 @@ export default class ProductList extends React.PureComponent {
       </View>
     );
   }
-  //获取最新数据
   _fetchData = async () => {
     await this.setState({
       isRefreshing: true,
       ProductData: {}
     });
-    const url = "http://guangdiu.com/api/gethots.php";
-    let response = await fetch(url).catch(err => {
-      throw new Error("获取半小时内最热商品出错.", err);
-    });
-    const result = await response.json();
+    let result = await Request.GET(Config.URL.Hot30Minute);
     if (result.status !== "ok")
       throw new Error("获取30分钟内最热商品异常.", result);
     await this.setState({

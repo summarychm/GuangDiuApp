@@ -5,12 +5,11 @@
  * @Last Modified time: 2018-02-05 16:41:19 
  */
 import React from "react";
-
-import { Image } from "react-native";
 import { StackNavigator, TabNavigator } from "react-navigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { Config } from "apptools";
+
 import Home from "../Pages/Home/index";
 import HaiTao from "../Pages/HaiTao/index";
 import HourList from "../Pages/HourList/index";
