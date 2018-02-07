@@ -9,8 +9,8 @@ import { StyleSheet, TouchableOpacity, Text, View, Image } from "react-native";
 
 import NavigationHeader from "app/navigation-header";
 
-// APP首页header封装组件
-export default class HeaderComponent extends React.PureComponent {
+// 首页和海淘页header封装组件
+export default class PublicHeader extends React.PureComponent {
   static defaultProps = {
     country: "ch",
     countryTitle: "国内"

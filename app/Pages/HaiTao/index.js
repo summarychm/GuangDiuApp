@@ -11,15 +11,19 @@ import {
   Image,
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   FlatList
 } from "react-native";
 
-import HeaderComponent from "../Home/HeaderComponent";
+
+// 公共头部
+import PublicHeader from "app/public-header";
+// 公共列表项
 import ProductListItem from "app/product-list-item";
+// 公共空白页
 import NoDataComponent from "app/no-data-component";
 
+// 公共方法
 import { Config, Request } from "apptools";
 
 // 海淘页面
@@ -27,7 +31,7 @@ export default class Home extends React.PureComponent {
   static navigationOptions = {
     header: ({ navigation }) => {
       return (
-        <HeaderComponent
+        <PublicHeader
           navigation={navigation}
           country="us"
           countryTitle="海淘"

@@ -1,5 +1,6 @@
 "use strict";
 /*
+ * // APP首页
  * @Author: Max.Liu 
  * @Date: 2018-02-04
  * @Last Modified time: 2018-02-05 12:15:52 
@@ -11,23 +12,25 @@ import {
   Image,
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   FlatList
 } from "react-native";
 
-import HeaderComponent from "./HeaderComponent";
+// 公共头部
+import PublicHeader from "app/public-header";
+// 公共列表项
 import ProductListItem from "app/product-list-item";
+// 公共空白页
 import NoDataComponent from "app/no-data-component";
 
+// 公共方法
 import { Config, Request } from "apptools";
 
-// APP首页
 export default class Home extends React.PureComponent {
   static navigationOptions = {
     header: ({ navigation }) => {
       return (
-        <HeaderComponent
+        <PublicHeader
           navigation={navigation}
           country="ch"
           countryTitle="国内"

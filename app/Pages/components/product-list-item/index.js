@@ -29,6 +29,7 @@ export default class ProductListItem extends React.Component {
     const { image, title, id, navigation } = this.props;
     return (
       <TouchableHighlight
+        underlayColor={Config.Styles.ColorMain}
         onPress={() => {
           navigation && navigation.navigate("ProductDetail",{id:id,title:title});
         }}
