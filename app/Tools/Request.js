@@ -6,7 +6,7 @@
  */
 import { Config, Tools } from "apptools";
 
-export let Request = {};
+let RequestBase = {};
 
 /**
  * GET请求封装
@@ -14,7 +14,7 @@ export let Request = {};
  * @param {object} params 请求的参数,只接受对象类型{}
  * @return 返回Promise
  */
-Request.GET = (url, params) => {
+RequestBase.GET = (url, params) => {
   if (url && url.length <= 5) throw new Error("请传递正确的URL地址");
   if (params) {
     !url.includes("?") && (url += "?");
@@ -39,7 +39,7 @@ Request.GET = (url, params) => {
  * @param {object} params 请求的参数,只接受对象类型{}
  * @param {object} headers 请求头参数,只接受对象类型{}
  */
-Request.POST = (url, params, headers) => {
+RequestBase.POST = (url, params, headers) => {
   if (url && url.length <= 5) throw new Error("请传递正确的URL地址");
 
   let options = {
@@ -64,3 +64,5 @@ const FetchFn = (url, options) => {
     })
     .then(response => response.json());
 };
+
+global.RequestBase = RequestBase;

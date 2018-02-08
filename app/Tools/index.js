@@ -7,4 +7,3 @@
 export * from './Config';
 export * from './Router';
 export * from './Tools';
-export * from './Request';

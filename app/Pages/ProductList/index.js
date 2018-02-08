@@ -12,7 +12,7 @@ import { FlatList, View, Text, StyleSheet } from "react-native";
 import ProductListItem from "app/product-list-item";
 import NoDataComponent from "app/no-data-component";
 
-import { Config, Request } from "apptools";
+import { Config } from "apptools";
 
 // styles放到最后,navigationOptions无法识别,所以将其提前.
 const styles = StyleSheet.create({
@@ -97,7 +97,7 @@ export default class ProductList extends React.PureComponent {
       isRefreshing: true,
       ProductData: {}
     });
-    let result = await Request.GET(Config.URL.Hot30Minute);
+    let result = await RequestBase.GET(Config.URL.Hot30Minute);
     if (result.status !== "ok")
       throw new Error("获取30分钟内最热商品异常.", result);
     await this.setState({

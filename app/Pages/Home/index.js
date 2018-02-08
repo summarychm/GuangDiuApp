@@ -7,14 +7,7 @@
  */
 
 import React from "react";
-import {
-  Button,
-  Image,
-  View,
-  Text,
-  StyleSheet,
-  FlatList
-} from "react-native";
+import { Button, Image, View, Text, StyleSheet, FlatList } from "react-native";
 
 // 公共头部
 import PublicHeader from "app/public-header";
@@ -24,7 +17,7 @@ import ProductListItem from "app/product-list-item";
 import NoDataComponent from "app/no-data-component";
 
 // 公共方法
-import { Config, Request } from "apptools";
+import { Config } from "apptools";
 
 export default class Home extends React.PureComponent {
   static navigationOptions = {
@@ -41,10 +34,11 @@ export default class Home extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isRefreshing: false,
+      isRefreshing: false, //下拉刷新
+      isLoadingTail: false, // 上拉加载
       config: {
         sinceid: 0, //上次最后一个结果id
-        count: 10, //数量
+        count: 5, //数量
         country: "ch", //国内ch,海淘us
         mall: "", // 电商平台
         cate: "" //分类
@@ -53,73 +47,83 @@ export default class Home extends React.PureComponent {
     };
   }
   componentDidMount() {
-    this._fetchData();
+    this._fetchData("tail");
   }
   render() {
-    return <View style={styles.container}>{this._renderList()}</View>;
-  }
-  _renderList = () => {
-    return !this.state.ProductData.length ? (
-      <NoDataComponent />
-    ) : (
-      <FlatList
-        data={this.state.ProductData}
-        refreshing={this.state.isRefreshing}
-        onRefresh={() => {
-          let config = this.state.config;
-          config.sinceid = 0;
-          // 设置为刷新状态,清空ProductData和重置sinceid
-          this.setState({
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={this.state.ProductData}
+          initialNumToRender={0}
+          keyExtractor={product => product.id}
+          renderItem={product => (
+            <ProductListItem
+              {...product.item}
+              navigation={this.props.navigation}
+            />
+          )}
+          ListEmptyComponent={<NoDataComponent />}
+          refreshing={this.state.isRefreshing}
+          onRefresh={async () => {
+            let config = this.state.config;
+            config.sinceid = 0;
+            // 设置为刷新状态,清空ProductData和重置sinceid
+            await this.setState({
               isRefreshing: true,
-              config: config,
-              ProductData:[]
-            },() => {
-              this._fetchData();
-            }
-          );
-        }}
-        //距离底部20dp触发就触发onEndReached回调
-        onEndReachedThreshold={0.5}
-        //触底刷新事件
-        onEndReached={this._fetchData}
-        keyExtractor={product => product.id}
-        renderItem={product => (
-          <ProductListItem
-            {...product.item}
-            navigation={this.props.navigation}
-          />
-        )}
-      />
+              config: config
+            });
+            this._fetchData("refresh");
+          }}
+          //距离底部30%触发上滑加载方法
+          onEndReachedThreshold={0.3}
+          //触底刷新事件
+          onEndReached={() => {
+            //console.log("length", this.state.ProductData.length);
+            if (this.state.ProductData.length > 0) this._fetchData("tail");
+          }}
+        />
+      </View>
     );
-  };
-  _fetchData = () => {
-    let url = Config.URL.ProductList;
-    let { config } = this.state;
+  }
+  // 获取最新数据方法
+  _fetchData = async flag => {
+    if (this.state.isLoadingTail || this.state.isRefreshing) return;
+    await this.setState({
+      isRefreshing: flag === "refresh" ? true : false,
+      isLoadingTail: flag === "tail" ? true : false
+    });
+
     let options = this.state.config;
+    // 获取最新数据时,不要附带sinceid参数
     if (options.sinceid === 0) delete options.sinceid;
 
     let header = { Accept: "application/json" };
-    Request.POST(url, options, header).then(result => {
-      if (result.status !== "ok")
-        throw new Error("获取首页商品列表异常.", result);
-      let ProductData = [];
-      if (!this.state.isRefreshing) {
-        //上滑加载
-        ProductData = this.state.ProductData;
-        ProductData = ProductData.concat(result.data);
-      } else {
-        //下拉刷新
-        ProductData = result.data;
-      }
+    global.RequestBase.POST(Config.URL.ProductList, options, header)
+      .catch(err => {
+        console.error(err);
+      })
+      .then(result => {
+        if (result.status !== "ok") {
+          console.error("获取首页商品列表异常.", err);
+          this.setState({
+            isRefreshing: false,
+            isLoadingTail: false
+          });
+        }
+        let ProductData = this.state.isRefreshing
+          ? result.data
+          : [...this.state.ProductData, ...result.data];
+        let config = this.state.config;
+        //更新最新商品编号
+        config.sinceid = ProductData[ProductData.length - 1].id;
 
-      let config = this.state.config;
-      config.sinceid = ProductData[ProductData.length - 1].id;
-      this.setState({
-        ProductData: ProductData,
-        config: config,
-        isRefreshing: false
+        this.setState({
+          ProductData: ProductData,
+          config: config,
+          isRefreshing: false,
+          isLoadingTail: false
+        });
       });
-    });
   };
 }
 

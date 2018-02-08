@@ -8,6 +8,7 @@
 * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)(一款ios风格图标库)
 * [prop-types](https://github.com/facebook/prop-types)(用户传参验证)
 * [query-string](https://github.com/sindresorhus/query-string)(用来序列化网络请求参数)
+* [realm](https://github.com/realm/realm-js)(跨平台数据库)
 * []()()
 * []()()
 
