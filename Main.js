@@ -12,7 +12,7 @@ import { AppRegistry } from "react-native";
 import { Router } from "apptools";
 import Request from "./app/Tools/Request";
 //全局载入RealmBase属性
-// import RealmBase from "./app/Storage/RealmStore";
+ //import "./app/Storage/RealmStore";
 
 // 屏蔽APPRemote debugger的警告
 console.ignoredYellowBox = ["Remote debugger"];

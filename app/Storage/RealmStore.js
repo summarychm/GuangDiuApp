@@ -7,9 +7,21 @@
 "use strict";
 
 import Realm from "realm";
+
+let RealmBase = {};
+
 // 定义表结构
 const HomeRealm = {
-  name: "HOMERealm",
+  name: "HomeRealm",
+  properties: {
+    id: "int",
+    title: "string?",
+    image: "string?",
+    mall: "string?"
+  }
+};
+const HaiTaoRealm = {
+  name: "HaiTaoRealm",
   properties: {
     id: "int",
     title: "string?",
@@ -18,44 +30,10 @@ const HomeRealm = {
   }
 };
 
-Realm.open({ schema: [HomeRealm] }).then(results => {
-  console.log(results);
-});
-
 /* 
-// 定义表结构
-class HomeRealm {
-  // 可以编写自定义方法
-  get fullName() {
-    return this.firstName + ' ' + this.lastName;
-  } 
-}
-HomeRealm.schema = {
-  name: "HOMERealm",
-  properties: {
-    id: "int",
-    title: "string",
-    image: "string",
-    mall: "string"
-  }
-};
-
-class HaiTaoRealm {
-  
-}
-HaiTaoRealm.schema = {
-  name: "HaiTaoRealm",
-  properties: {
-    id: "int",
-    title: "string",
-    image: "string",
-    mall: "string"
-  }
-};
 // 初始化realm对象
-let realm = new Realm({ schema: [HomeRealm, HaiTaoRealm] });
+let realm = Realm.open({ schema: [HomeRealm, HaiTaoRealm] });
 
-let RealmBase = {};
 // 写入数据
 RealmBase.write = (schema, data) => {
   realm.write(() => {
@@ -87,7 +65,6 @@ RealmBase.removeAllData = schema => {
     let objects = realm.objects(schema);
     realm.delete(objects);
   });
-}; 
-*/
+}; */ 
 
 global.RealmBase = RealmBase;
