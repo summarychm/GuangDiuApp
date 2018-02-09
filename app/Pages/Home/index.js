@@ -54,7 +54,7 @@ export default class Home extends React.PureComponent {
       <View style={styles.container}>
         <FlatList
           data={this.state.ProductData}
-          initialNumToRender={0}
+          initialNumToRender={7}
           keyExtractor={product => product.id}
           renderItem={product => (
             <ProductListItem
