@@ -22,6 +22,7 @@ export class Config {
   static URL = {
     Hot30Minute: `${BASE_URL}gethots.php`, // 30分钟内最热商品
     ProductList: `${BASE_URL}getlist.php`, // 商品列表
-    HourList: `${BASE_URL}getranklist.php` // 小时风云榜
+    HourList: `${BASE_URL}getranklist.php`, // 小时风云榜
+    Search:`${BASE_URL}getresult.php`, //搜索优惠
   };
 }

@@ -15,13 +15,15 @@ import HaiTao from "../Pages/HaiTao/index";
 import HourList from "../Pages/HourList/index";
 import ProductList from "../Pages/ProductList/index";
 import ProductDetail from "../Pages/components/product-detail";
+import Search from "../Pages/Search/index";
 //启动页
 import LaunchPage from "../Pages/components/launch-page";
 
 const HomeStack = StackNavigator({
   Home: { screen: Home, path: "/home" },
   ProductList: { screen: ProductList, path: "/productList" },
-  ProductDetail: { screen: ProductDetail, path: "/productDetail" }
+  ProductDetail: { screen: ProductDetail, path: "/productDetail" },
+  Search: { screen: Search, path: "/Search" }
 });
 const HaiTaoStack = StackNavigator({
   HaiTao: { screen: HaiTao, path: "/home" }
@@ -74,7 +76,7 @@ const TabBarNavigation = TabNavigator(
     }
   },
   {
-    initialRouteName: "HourListTab",
+    initialRouteName: "HomeTab",
     tabBarPosition: "bottom",
     tabBarVisible: false,
     lazyLoad: true,
@@ -84,7 +86,6 @@ const TabBarNavigation = TabNavigator(
       //showLabel: false,
       activeTintColor: Config.Styles.ColorMain, // 项目基色
       inactiveTintColor: "#000", //次要色
-     // inactiveTintColor: Config.Styles.ColorMinor, //次要色
       style: {
         backgroundColor: "#fafafa"
       }

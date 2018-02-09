@@ -183,7 +183,7 @@ export default class HourList extends React.PureComponent {
       })
       .then(async result => {
         if (result.status !== "ok") {
-          console.error("获取小时风云榜数据异常.", err);
+          console.log("获取小时风云榜数据异常.", result);
           await this.setState({
             isRefreshing: false
           });

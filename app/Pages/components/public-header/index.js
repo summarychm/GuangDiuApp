@@ -16,13 +16,13 @@ export default class PublicHeader extends React.PureComponent {
     countryTitle: "国内"
   };
   render() {
+    const { navigation, country, countryTitle } = this.props;
     return (
       <NavigationHeader
         renderLeft={() => (
           <TouchableOpacity
             style={styles.ViewLeft}
             onPress={() => {
-              const { navigation, country, countryTitle } = this.props;
               navigation &&
                 navigation.navigate("ProductList", {
                   country: country,
@@ -36,7 +36,7 @@ export default class PublicHeader extends React.PureComponent {
         renderTitle={() => (
           <TouchableOpacity
             onPress={() => {
-              console.log("TouchableRight");
+              console.log("TouchableTitle");
             }}
           >
             <Image
@@ -49,7 +49,7 @@ export default class PublicHeader extends React.PureComponent {
           <TouchableOpacity
             style={styles.ViewRight}
             onPress={() => {
-              console.log("TouchableRight");
+              navigation && navigation.navigate("Search");
             }}
           >
             <Image source={{ uri: "search_icon_20x20" }} style={styles.image} />

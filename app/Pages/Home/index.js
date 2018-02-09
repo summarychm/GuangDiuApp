@@ -112,7 +112,7 @@ export default class Home extends React.PureComponent {
       })
       .then(async result => {
         if (result.status !== "ok") {
-          console.error("获取首页商品列表异常.", err);
+          console.log("获取首页商品列表异常.", result);
           await this.setState({
             isRefreshing: false,
             isLoadingTail: false
