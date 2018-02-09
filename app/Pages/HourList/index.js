@@ -173,13 +173,6 @@ export default class HourList extends React.PureComponent {
     global.RequestBase.POST(Config.URL.HourList, options, header)
       .catch(err => {
         console.error(err);
-        // //从Realm数据库汇总读取数据.
-        // let data = RealmBase.loadAll("HomeRealm");
-        // data &&
-        //   this.setState({
-        //     ProductData: data,
-        //     isRefreshing: false
-        //   });
       })
       .then(async result => {
         if (result.status !== "ok") {
@@ -204,12 +197,6 @@ export default class HourList extends React.PureComponent {
           nexthourdate: result.nexthourdate, //
           isRefreshing: false
         });
-        /* 
-        // 更新本地Realm数据库.
-        // 先清空Realm数据库,再将最新的数据存入
-        await RealmBase.removeAllData("HomeRealm");
-        await RealmBase.create("HomeRealm", ProductData);
-         */
       });
   };
 

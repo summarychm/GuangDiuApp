@@ -1,13 +1,21 @@
 "use strict";
 /*
- * // 海淘页面
+ * // 海淘
  * @Author: Max.Liu 
  * @Date: 2018-02-04
  * @Last Modified time: 2018-02-05 12:15:52 
  */
 
 import React from "react";
-import { Button, Image, View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  Button,
+  FlatList,
+  Image,
+  View,
+  Text,
+  StyleSheet,
+  Modal
+} from "react-native";
 
 // 公共头部
 import PublicHeader from "app/public-header";
@@ -15,10 +23,15 @@ import PublicHeader from "app/public-header";
 import ProductListItem from "app/product-list-item";
 // 公共空白页
 import NoDataComponent from "app/no-data-component";
-
+// 分类数据
+import Category from "app/category-js";
+import SiftData from "../../Storage/Data/HTSiftData.json";
 // 公共方法
 import { Config } from "apptools";
 
+
+
+let that = null;
 export default class HaiTao extends React.PureComponent {
   static navigationOptions = {
     header: ({ navigation }) => {
@@ -27,6 +40,10 @@ export default class HaiTao extends React.PureComponent {
           navigation={navigation}
           country="us"
           countryTitle="海淘"
+          onTitleFn={() => {
+            // navigation.setParams({ isShow: true });
+            that._ToggleModal();
+          }}
         />
       );
     }
@@ -36,6 +53,7 @@ export default class HaiTao extends React.PureComponent {
     this.state = {
       isRefreshing: false, //下拉刷新
       isLoadingTail: false, // 上拉加载
+      isSiftModal: false, // 是否显示筛选界面
       config: {
         sinceid: 0, //上次最后一个结果id
         count: 5, //数量
@@ -47,11 +65,26 @@ export default class HaiTao extends React.PureComponent {
     };
   }
   componentDidMount() {
+    that = this;
     this._fetchData("tail");
   }
   render() {
     return (
       <View style={styles.container}>
+        <Modal
+          animationType={"none"}
+          transparent={true}
+          visible={this.state.isSiftModal}
+          onRequestClose={this._ToggleModal}
+        >
+          <Category
+            data={SiftData}
+            onCloseModal={this._ToggleModal}
+            changeSelect={(mall, cate) => {
+              this._changeSelect(mall, cate);
+            }}
+          />
+        </Modal>
         <FlatList
           data={this.state.ProductData}
           initialNumToRender={7}
@@ -67,7 +100,7 @@ export default class HaiTao extends React.PureComponent {
           onRefresh={async () => {
             let config = this.state.config;
             config.sinceid = 0;
-            // 设置为刷新状态,清空ProductData和重置sinceid
+            // 设置为刷新状态
             await this.setState({
               isRefreshing: true,
               config: config
@@ -85,6 +118,27 @@ export default class HaiTao extends React.PureComponent {
       </View>
     );
   }
+  // 切换商城和分类
+  _changeSelect = (mall, cate) => {
+    let config = Object.assign({}, this.state.config);
+    config.cate = cate;
+    config.mall = mall;
+    this.setState(
+      {
+        isSiftModal:false,
+        ProductData:[],
+        config: config
+      },
+      this._fetchData
+    );
+  };
+  //显示模态窗
+  _ToggleModal = () => {
+    this.setState({
+      isSiftModal: !this.state.isSiftModal
+    });
+  };
+
   // 获取最新数据方法
   _fetchData = async flag => {
     if (this.state.isLoadingTail || this.state.isRefreshing) return;
@@ -98,46 +152,31 @@ export default class HaiTao extends React.PureComponent {
     if (options.sinceid === 0) delete options.sinceid;
 
     let header = { Accept: "application/json" };
-    global.RequestBase.POST(Config.URL.ProductList, options, header)
-      .catch(err => {
-        console.error(err);
-        //从Realm数据库汇总读取数据.
-        let data = RealmBase.loadAll("HomeRealm");
-        data &&
-          this.setState({
-            ProductData: data,
-            isLoadingTail: false,
-            isRefreshing: false
-          });
-      })
-      .then(async result => {
-        if (result.status !== "ok") {
-          console.log("获取首页商品列表异常.", result);
-          await this.setState({
-            isRefreshing: false,
-            isLoadingTail: false
-          });
-        }
-        let ProductData = this.state.isRefreshing
-          ? result.data
-          : [...this.state.ProductData, ...result.data];
-        let config = Object.assign({}, this.state.config);
-        //更新最新商品编号
-        config.sinceid = ProductData[ProductData.length - 1].id;
+    let response = global.RequestBase.POST(
+      Config.URL.ProductList,
+      options,
+      header
+    ).catch(err => {
+      console.error(err);
+    });
+    response.then(result => {
+      if (result.status !== "ok") {
+        console.log("获取首页商品列表异常.", result);
+      }
+      let ProductData = this.state.isRefreshing
+        ? result.data
+        : [...this.state.ProductData, ...result.data];
 
-        await this.setState({
-          ProductData: ProductData,
-          config: config,
-          isRefreshing: false,
-          isLoadingTail: false
-        });
-        /* 
-        // 更新本地Realm数据库.
-        // 先清空Realm数据库,再将最新的数据存入
-        await RealmBase.removeAllData("HomeRealm");
-        await RealmBase.create("HomeRealm", ProductData);
-         */
+      //更新最新商品编号
+      let config = Object.assign({}, this.state.config);
+      config.sinceid = ProductData[ProductData.length - 1].id;
+      this.setState({
+        ProductData: ProductData,
+        config: config,
+        isRefreshing: false,
+        isLoadingTail: false
       });
+    });
   };
 }
 

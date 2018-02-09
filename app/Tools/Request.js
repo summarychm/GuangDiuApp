@@ -59,8 +59,8 @@ RequestBase.POST = (url, params, headers) => {
 //公共的Fetch方法
 const FetchFn = (url, options) => {
   return fetch(url, options)
-    .catch(errs => {
-      throw new Error(`${options.method}请求期间发生错误`, errs);
+    .catch(errors => {
+      return new Promise();
     })
     .then(response => response.json());
 };

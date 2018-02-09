@@ -67,3 +67,11 @@ RealmBase.removeAllData = schema => {
 };  
 
 global.RealmBase = RealmBase;
+
+/* 
+// 更新本地Realm数据库.
+        // 先清空Realm数据库,再将最新的数据存入
+        await RealmBase.removeAllData("HomeRealm");
+        await RealmBase.create("HomeRealm", ProductData);
+
+ */        

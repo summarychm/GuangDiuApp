@@ -59,7 +59,7 @@ export default class Search extends React.PureComponent {
             />
           </View>
           <Button
-            title={this.state.q.length > 0 ? "搜索" : "取消"}
+            title={"搜索"}
             color={Config.Styles.ColorMain}
             disabled={this.state.isLoadingTail}
             onPress={() => {
@@ -137,18 +137,16 @@ export default class Search extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "white",
-    paddingTop: 20
   },
   headerContainer: {
-    height: 40,
+    height: 50,
     width: Config.Styles.DevicesWidth,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 5
+    marginLeft: 5,
+    marginRight:5,
   },
   headerView: {
     flex: 1,
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
-    margin: 5
+   
   },
   headerIconStyles: { width: 20, height: 20, margin: 5 },
   textInput: {
