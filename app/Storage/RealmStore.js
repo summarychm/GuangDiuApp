@@ -30,12 +30,11 @@ const HaiTaoRealm = {
   }
 };
 
-/* 
 // 初始化realm对象
 let realm = Realm.open({ schema: [HomeRealm, HaiTaoRealm] });
 
 // 写入数据
-RealmBase.write = (schema, data) => {
+RealmBase.create = (schema, data) => {
   realm.write(() => {
     for (let i = 0; i < data.length; i++) {
       let temp = data[i];
@@ -65,6 +64,6 @@ RealmBase.removeAllData = schema => {
     let objects = realm.objects(schema);
     realm.delete(objects);
   });
-}; */ 
+};  
 
 global.RealmBase = RealmBase;
