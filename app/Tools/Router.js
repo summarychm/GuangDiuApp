@@ -83,9 +83,10 @@ const TabBarNavigation = TabNavigator(
       tabBarVisible: false,
       //showLabel: false,
       activeTintColor: Config.Styles.ColorMain, // 项目基色
-      inactiveTintColor: Config.Styles.ColorMinor, //次要色
+      inactiveTintColor: "#000", //次要色
+     // inactiveTintColor: Config.Styles.ColorMinor, //次要色
       style: {
-        backgroundColor: "#eee"
+        backgroundColor: "#fafafa"
       }
     }
   }

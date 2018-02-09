@@ -12,7 +12,7 @@ export class Config {
     DevicesWidth: width,
     DevicesHeight: height,
     ColorMain: "#6ebe64",
-    ColorMinor: "#bbbabb",
+    ColorMinor: "#efefef",
     hairlineWidth: StyleSheet.hairlineWidth
   };
   static Headers = {

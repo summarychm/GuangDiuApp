@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     width: Config.Styles.DevicesWidth,
     height: Platform.OS === "ios" ? 60 : 40,
     backgroundColor: "#eee",
+   // backgroundColor: "red",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
