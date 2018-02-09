@@ -7,7 +7,15 @@
 
 "use strict";
 import React from "react";
-import { Button, Image, View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  Button,
+  Image,
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity
+} from "react-native";
 
 // 公共头部
 import NavigationHeader from "app/navigation-header";
@@ -68,7 +76,7 @@ export default class HourList extends React.PureComponent {
           renderRight={() => (
             <Text
               style={{
-                alignSelf:'flex-end',
+                alignSelf: "flex-end",
                 marginRight: 20,
                 fontSize: 12,
                 color: Config.Styles.ColorMain
@@ -86,11 +94,10 @@ export default class HourList extends React.PureComponent {
     this.state = {
       isRefreshing: false, //下拉刷新
       ProductData: [],
-      config: {
-        date: 20180209, //格式：20160711
-        hour: 10 //格式：7~23)
-      }
+      hour: "",
+      date: ""
     };
+    let currentTime = new Date();
   }
   componentDidMount() {
     this._fetchData();
@@ -100,7 +107,7 @@ export default class HourList extends React.PureComponent {
       <View style={styles.container}>
         {/* 顶部时间段提示部分 */}
         <View style={styles.HeaderContainer}>
-          <Text>提示栏提示栏提示栏提示栏</Text>
+          <Text>{this._titleFormat()}</Text>
         </View>
         {/* 中间列表展示部分 */}
         <View style={styles.BodyContainer}>
@@ -116,13 +123,37 @@ export default class HourList extends React.PureComponent {
             )}
             ListEmptyComponent={<NoDataComponent />}
             refreshing={this.state.isRefreshing}
-            onRefresh={this._fetchData}
+            onRefresh={() => {
+              this.setState(
+                {
+                  hour: "",
+                  date: ""
+                },this._fetchData);
+            }}
           />
         </View>
         {/* 底部事件选择部分 */}
         <View style={styles.FooterContainer}>
-          <Text style={styles.FooterText}>{`<上一小时`}</Text>
-          <Text style={styles.FooterText}>{`下一小时>`}</Text>
+          <Text
+            style={styles.FooterText}
+            onPress={() => {
+              this.setState(
+                {
+                  hour: this.state.lasthourhour,
+                  date: this.state.lasthourdate
+                },this._fetchData);
+            }}
+          >{`<上一小时`}</Text>
+          <Text
+            style={styles.FooterText}
+            onPress={() => {
+              this.setState(
+                {
+                  hour: this.state.nexthourhour,
+                  date: this.state.nexthourdate
+                },this._fetchData);
+            }}
+          >{`下一小时>`}</Text>
         </View>
       </View>
     );
@@ -134,9 +165,11 @@ export default class HourList extends React.PureComponent {
       isRefreshing: true
     });
 
-    let options = this.state.config;
+    let options = {
+      date: this.state.date || "", //格式：20160711
+      hour: this.state.hour || "" //13
+    };
     let header = { Accept: "application/json" };
-
     global.RequestBase.POST(Config.URL.HourList, options, header)
       .catch(err => {
         console.error(err);
@@ -150,7 +183,7 @@ export default class HourList extends React.PureComponent {
       })
       .then(async result => {
         if (result.status !== "ok") {
-          console.error("获取首页商品列表异常.", err);
+          console.error("获取小时风云榜数据异常.", err);
           await this.setState({
             isRefreshing: false
           });
@@ -159,10 +192,16 @@ export default class HourList extends React.PureComponent {
         let ProductData = this.state.isRefreshing
           ? result.data
           : [...this.state.ProductData, ...result.data];
-
         //更新最新商品编号
         await this.setState({
           ProductData: ProductData,
+          displaydate: result.displaydate, // "今日"
+          rankduring: result.rankduring, //"12:00-13:00"
+          rankhour: result.rankhour, // 13
+          lasthourhour: result.lasthourhour, // "12"
+          lasthourdate: result.lasthourdate, // "20180209"
+          nexthourhour: result.nexthourhour, //
+          nexthourdate: result.nexthourdate, //
           isRefreshing: false
         });
         /* 
@@ -172,5 +211,13 @@ export default class HourList extends React.PureComponent {
         await RealmBase.create("HomeRealm", ProductData);
          */
       });
+  };
+
+  //标题格式化
+  _titleFormat = () => {
+    let { displaydate, rankhour, rankduring } = this.state;
+    if (this.state.displaydate)
+      return `${displaydate}${rankhour}点档 (${rankduring})`;
+    else return "今日";
   };
 }
