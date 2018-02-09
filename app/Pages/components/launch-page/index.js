@@ -4,14 +4,14 @@ import { Image, View, StyleSheet } from "react-native";
 import { Config } from "apptools";
 
 class LaunchPage extends Component {
-  static navigationOptions=({navigation})=>{
+  static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
     return {
-      header:<View></View>,
-      title:"title",
+      header: <View />,
+      title: "title"
       //headerMode:'none',
-    }
-  }
+    };
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -19,10 +19,9 @@ class LaunchPage extends Component {
     };
   }
   componentDidMount() {
-
-    setTimeout(()=> {
-      this.props.navigation.navigate("Home")
-    }, 1000*0.1);
+    setTimeout(() => {
+      this.props.navigation.navigate("TabBarPage");
+    }, 1000 * 0.1);
   }
   render() {
     return (

@@ -26,9 +26,6 @@ export default class ProductListItem extends React.Component {
     id: PropType.number
   };
   render() {
-    console.log("====================================");
-    console.log("props", this.props);
-    console.log("====================================");
     const { image, title, id, navigation } = this.props;
     return (
       <TouchableHighlight

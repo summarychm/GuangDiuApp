@@ -74,7 +74,7 @@ const TabBarNavigation = TabNavigator(
     }
   },
   {
-    initialRouteName: "HomeTab",
+    initialRouteName: "HourListTab",
     tabBarPosition: "bottom",
     tabBarVisible: false,
     lazyLoad: true,
