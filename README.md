@@ -1,17 +1,17 @@
 # 逛丢网第三方APP
 
 ## 项目简介
-> 逛丢网是一家汇集各大电商站优惠商品信息的资讯站.
-> 因为该站架构较为简单,数据文档全面,接口也十分稳定,
-> 所以才使用React Native技术开发了该项目.
-> android环境下开发,ios没有详细测试.
-> 该项目为个人学习 react-native 的 Demo, 欢迎技术交流。
+> 逛丢网是一家汇集各大电商站优惠商品信息的资讯站.     
+> 因为该站架构较为简单,数据文档全面,接口也十分稳定.     
+> 所以才使用React Native技术开发了该项目.    
+> android环境下开发,ios没有详细测试.     
+> 该项目为个人学习react-native的Demo,欢迎技术交流.    
 
 ## 项目演示
-1. Gif示例
+1. Gif示例    
 ![项目演示](./app/Storage/Data/GuangDiuApp.gif)
 
-2. APP架构 processon
+2. APP架构 processon     
 [APP架构图](https://www.processon.com/mindmap/5a7e93dee4b0615ac0550a57)
 
 ## TodoList
