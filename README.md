@@ -4,10 +4,14 @@
 > 逛丢网是一家汇集各大电商站优惠商品信息的资讯站.
 > 因为该站架构较为简单,数据文档全面,接口也十分稳定,
 > 所以才使用React Native技术开发了该项目.
+> android环境下开发,ios没有详细测试.
 > 该项目为个人学习 react-native 的 Demo, 欢迎技术交流。
 
 ## 项目演示
+1. Gif示例
+![项目演示](./app/Storage/Data/GuangDiuApp.gif)
 
+2. APP架构 processon
 [APP架构图](https://www.processon.com/mindmap/5a7e93dee4b0615ac0550a57)
 
 ## TodoList
@@ -20,7 +24,6 @@
     - [x]  将配置文件,封装的fetch类,常用Helper类等整合到自定义package中,便于各页面引用.
     - [x]  将Main.js作为项目入口文件,在其中引用需要优先初始化的fetch类等组件.
     - [x]  
-    - [x]
 - [x]  2.首页
     - [x]  重写Header组件,并将该Header封装为公共组件,在首页和海淘页共用
     - [x]  点击header左侧图标,实现跳转到30分钟最热排行页面.
