@@ -128,36 +128,55 @@ export default class HourList extends React.PureComponent {
                 {
                   hour: "",
                   date: ""
-                },this._fetchData);
+                },
+                this._fetchData
+              );
             }}
           />
         </View>
         {/* 底部事件选择部分 */}
         <View style={styles.FooterContainer}>
-          <Text
-            style={styles.FooterText}
-            onPress={() => {
-              this.setState(
-                {
-                  hour: this.state.lasthourhour,
-                  date: this.state.lasthourdate
-                },this._fetchData);
-            }}
-          >{`<上一小时`}</Text>
-          <Text
-            style={styles.FooterText}
-            onPress={() => {
-              this.setState(
-                {
-                  hour: this.state.nexthourhour,
-                  date: this.state.nexthourdate
-                },this._fetchData);
-            }}
-          >{`下一小时>`}</Text>
+          {this._footContainer(
+            `<上一小时`,
+            this.state.lasthourhour,
+            this.state.lasthourdate
+          )}
+          {this._footContainer(
+            `下一小时>`,
+            this.state.nexthourhour,
+            this.state.nexthourdate
+          )}
         </View>
       </View>
     );
   }
+  //底部小时切换组件
+  // 文本内容,时段,日期
+  _footContainer = (text, hour, time) => {
+    console.log("====================================");
+    console.log(hour, time);
+    console.log("====================================");
+    if (!hour || hour.length < 1) {
+      return <Text>{text}</Text>;
+    }
+    return (
+      <Text
+        style={styles.FooterText}
+        onPress={() => {
+          this.setState(
+            {
+              hour: hour,
+              date: time
+            },
+            this._fetchData
+          );
+        }}
+      >
+        {text}
+      </Text>
+    );
+  };
+
   // 获取最新数据方法
   _fetchData = async () => {
     if (this.state.isRefreshing) return;
