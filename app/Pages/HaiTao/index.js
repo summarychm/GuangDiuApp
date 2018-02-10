@@ -29,8 +29,6 @@ import SiftData from "../../Storage/Data/HTSiftData.json";
 // 公共方法
 import { Config } from "apptools";
 
-
-
 let that = null;
 export default class HaiTao extends React.PureComponent {
   static navigationOptions = {
@@ -90,7 +88,7 @@ export default class HaiTao extends React.PureComponent {
           />
         </Modal>
         <FlatList
-         ref={node => (this.flatListNode = node)}
+          ref={node => (this.flatListNode = node)}
           data={this.state.ProductData}
           initialNumToRender={7}
           keyExtractor={product => product.id}
@@ -107,7 +105,6 @@ export default class HaiTao extends React.PureComponent {
             config.sinceid = 0;
             // 设置为刷新状态
             await this.setState({
-              isRefreshing: true,
               config: config
             });
             this._fetchData("refresh");
@@ -116,7 +113,6 @@ export default class HaiTao extends React.PureComponent {
           onEndReachedThreshold={0.3}
           //触底刷新事件
           onEndReached={() => {
-            //console.log("length", this.state.ProductData.length);
             if (this.state.ProductData.length > 0) this._fetchData("tail");
           }}
         />
@@ -130,8 +126,8 @@ export default class HaiTao extends React.PureComponent {
     config.mall = mall;
     this.setState(
       {
-        isSiftModal:false,
-        ProductData:[],
+        isSiftModal: false,
+        ProductData: [],
         config: config
       },
       this._fetchData

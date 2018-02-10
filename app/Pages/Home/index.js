@@ -104,7 +104,6 @@ export default class Home extends React.PureComponent {
             config.sinceid = 0;
             // 设置为刷新状态
             await this.setState({
-              isRefreshing: true,
               config: config
             });
             this._fetchData("refresh");
@@ -113,7 +112,6 @@ export default class Home extends React.PureComponent {
           onEndReachedThreshold={0.3}
           //触底刷新事件
           onEndReached={() => {
-            //console.log("length", this.state.ProductData.length);
             if (this.state.ProductData.length > 0) this._fetchData("tail");
           }}
         />

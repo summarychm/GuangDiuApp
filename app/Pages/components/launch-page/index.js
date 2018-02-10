@@ -21,7 +21,7 @@ class LaunchPage extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.props.navigation.navigate("TabBarPage");
-    }, 1000 * 0.1);
+    }, 1000 * 0.5);
   }
   render() {
     return (
