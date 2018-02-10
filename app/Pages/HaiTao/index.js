@@ -34,6 +34,10 @@ import { Config } from "apptools";
 let that = null;
 export default class HaiTao extends React.PureComponent {
   static navigationOptions = {
+    tabBarOnPress: event => {
+      that.flatListNode.scrollToOffset({ animated: true, offset: 0 });
+      event.jumpToIndex(event.scene.index);
+    },
     header: ({ navigation }) => {
       return (
         <PublicHeader
@@ -86,6 +90,7 @@ export default class HaiTao extends React.PureComponent {
           />
         </Modal>
         <FlatList
+         ref={node => (this.flatListNode = node)}
           data={this.state.ProductData}
           initialNumToRender={7}
           keyExtractor={product => product.id}

@@ -1,6 +1,6 @@
 "use strict";
 /*
- * // APP首页
+ * APP首页
  * @Author: Max.Liu 
  * @Date: 2018-02-04
  * @Last Modified time: 2018-02-05 12:15:52 
@@ -29,11 +29,13 @@ import SiftData from "../../Storage/Data/HomeSiftData.json";
 // 公共方法
 import { Config } from "apptools";
 
-
-
 let that = null;
 export default class Home extends React.PureComponent {
   static navigationOptions = {
+    tabBarOnPress: event => {
+      that.flatListNode.scrollToOffset({ animated: true, offset: 0 });
+      event.jumpToIndex(event.scene.index);
+    },
     header: ({ navigation }) => {
       return (
         <PublicHeader
@@ -41,7 +43,6 @@ export default class Home extends React.PureComponent {
           country="ch"
           countryTitle="国内"
           onTitleFn={() => {
-            // navigation.setParams({ isShow: true });
             that._ToggleModal();
           }}
         />
@@ -86,6 +87,7 @@ export default class Home extends React.PureComponent {
           />
         </Modal>
         <FlatList
+          ref={node => (this.flatListNode = node)}
           data={this.state.ProductData}
           initialNumToRender={7}
           keyExtractor={product => product.id}
@@ -125,8 +127,8 @@ export default class Home extends React.PureComponent {
     config.mall = mall;
     this.setState(
       {
-        isSiftModal:false,
-        ProductData:[],
+        isSiftModal: false,
+        ProductData: [],
         config: config
       },
       this._fetchData

@@ -153,9 +153,6 @@ export default class HourList extends React.PureComponent {
   //底部小时切换组件
   // 文本内容,时段,日期
   _footContainer = (text, hour, time) => {
-    console.log("====================================");
-    console.log(hour, time);
-    console.log("====================================");
     if (!hour || hour.length < 1) {
       return <Text>{text}</Text>;
     }

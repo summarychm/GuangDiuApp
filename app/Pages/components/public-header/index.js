@@ -5,7 +5,14 @@
  * @Last Modified time: 2018-02-05 15:42:54 
  */
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text, View, Image,Modal } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  View,
+  Image,
+  Modal
+} from "react-native";
 
 import NavigationHeader from "app/navigation-header";
 
@@ -36,7 +43,7 @@ export default class PublicHeader extends React.PureComponent {
         renderTitle={() => (
           <TouchableOpacity
             onPress={() => {
-              this.props.onTitleFn&&this.props.onTitleFn();
+              this.props.onTitleFn && this.props.onTitleFn();
             }}
           >
             <Image
@@ -62,7 +69,7 @@ export default class PublicHeader extends React.PureComponent {
 
 const styles = StyleSheet.create({
   ViewLeft: {
-    paddingLeft: 10,
+    paddingLeft: 10
   },
   ViewRight: {
     paddingRight: 10,
